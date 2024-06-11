@@ -1,0 +1,50 @@
+
+@if(errorMessage){
+  <div>
+    <app-error-message [errorMessage]="errorMessage" />
+  </div>
+}@else{
+<div class="modal">
+  <div class="modal-header">
+    <p>ROLES FORM {{user.username}}</p>
+  </div>
+  <div class="modal-body">
+    @if(isLoaded){ 
+      <mat-spinner></mat-spinner>
+    }@else{
+      <div class="roles-container">
+        <div class="exist-roles">
+          Roles
+          @for (role of existingRoles; track role; let i = $index) { @defer (on viewport) {
+          <app-roles-list
+            [index]="i"
+            [role]="role"
+            (loaded)="loadItems($event)"
+            (roleSelected)="addRole($event)"
+          ></app-roles-list>
+          } @placeholder {
+          <div class="list-item">loading...</div>
+          } }
+        </div>
+
+        <div class="roles-of-user">
+          User Roles
+          @for (role of user.roles; track role; let i = $index) {
+            <div class="role-item">
+              {{role.name}}
+              <button mat-icon-button (click)="removeRole(role)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          }
+
+        </div>
+        
+      </div>
+    }
+  </div>
+  <div class="modal-footer" style="display: flex; justify-content: center;">
+    <button mat-flat-button color="primary" (click)="closeModalHandler()">OK</button>
+  </div>
+</div>
+}

@@ -1,0 +1,33 @@
+@if(errorMessage){
+  <div>
+    <app-error-message [errorMessage]="errorMessage" />
+  </div>
+}@else{
+  <div class="modal">
+    <div class="modal-header">
+      <p>ROLE FORM</p>
+    </div>
+    <div class="modal-body">
+      @if(isLoaded){
+        <mat-spinner></mat-spinner>
+      }@else{
+      <form [formGroup]="roleForm">  
+          <mat-form-field class="example-full-width">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name" >
+          </mat-form-field>
+      </form>
+      }
+    
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between;">
+      <button mat-flat-button color="primary" (click)="closeModal()">Cancel</button>
+      @if(selectedRole == undefined){ 
+        <button mat-flat-button color="primary" (click)="addRoleHandler()">Create</button>
+      }@else{
+        <button mat-flat-button color="warn" (click)="deleteRoleHandler()">Delete</button>
+        <button mat-flat-button color="primary" (click)="editRole()">Edit</button>
+      }
+    </div>
+  </div>
+}

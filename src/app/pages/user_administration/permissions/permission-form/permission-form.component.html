@@ -1,0 +1,50 @@
+@if(errorMessage){
+  <div>
+    <app-error-message [errorMessage]="errorMessage" />
+  </div>
+}@else{
+  <div class="modal">
+    <div class="modal-header">
+      <p>PERMISSION FORM</p>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="permissionForm">  
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Name" formControlName="name" >
+        </mat-form-field>
+
+        
+        <mat-form-field class="example-full-width">
+          <mat-label>Roles</mat-label>
+          <input matInput placeholder="Roles" formControlName="roles">
+          <button mat-flat-button color="primary" matSuffix [disabled]="disabledForm" (click)="openRolesModalHandle()">
+            {{permission ? "Change" : "Add"}} roles
+          </button>
+        </mat-form-field>
+        
+    </form>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between;">
+      <button mat-flat-button color="primary" (click)="closeModalHandle()">Cancel</button>
+
+      @if(permission == undefined){ 
+        <button mat-flat-button color="primary" (click)="addPermissionHandler()">Create</button>
+      }
+      
+      @else{
+        
+        <button mat-flat-button color="warn" (click)="deletePermissionHandler()">Delete</button>
+
+        <button mat-flat-button color="primary" (click)="editPermissionHandler()" [disabled]="this.permissionForm.valid ? false : true">Edit</button>
+      
+      } 
+
+        
+    </div>
+
+    @if(openRolesModal){
+      <app-permission-roles-form [permission]="permission" (closeModal)="closeRolesModal($event);"></app-permission-roles-form>
+    }
+  </div>
+}

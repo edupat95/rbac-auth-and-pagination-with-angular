@@ -1,0 +1,60 @@
+@if(errorMessage){
+    <app-error-message [errorMessage]="errorMessage"></app-error-message>
+  } @else {
+    <div class="table-header">
+      <button mat-raised-button color="primary" (click)="createRole()">Add Role</button>
+      <form style="margin-left: 15%;" [formGroup]="filterForm" class="filters">
+        <h2 style="margin-right: 5%;">Filters</h2>
+        <mat-form-field >
+          <mat-label>Name</mat-label>
+          <input matInput id="name" type="text" placeholder="Name" formControlName="nameFilter">
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="handleFilterRoles()">Search</button>
+      </form>
+    </div>
+    @if(isLoading) {<mat-spinner></mat-spinner>}   
+    @else if(listOfRoles){  
+      <div class="mat-elevation-z8">
+        
+        @if(listOfRoles.length > 0){
+          <table mat-table [dataSource]="dataSource">
+          
+            <!--Roles Column-->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef> Name </th>
+              <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+            </ng-container>
+            
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> Actions </th>
+              <td mat-cell *matCellDef="let element"> 
+                <button mat-flat-button color="primary" (click)="selectRole(element)">Select</button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            
+          </table>
+        } @else {
+          <h1>No roles found</h1>
+        }
+        <mat-paginator 
+              [length]="meta?.itemCount || 0"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              [pageIndex]="pageIndex"
+              aria-label="Select page"
+              (page)="handlePageChange($event)"
+              >
+        </mat-paginator>
+      </div>
+  
+      @if(openRoleModal){
+        <app-role-form [selectedRole]="selectedRole" (close)="findRoles();"></app-role-form> 
+      }
+  
+    }
+  } 
+    

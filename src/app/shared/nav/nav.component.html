@@ -1,0 +1,127 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()" matTooltip="Menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span> Roles system with Angular & NestJs </span>
+  <span class="toolbar-item-spacer"></span>
+  <mat-form-field>
+    <mat-label>Select an option</mat-label>
+    <mat-select
+      [(value)]="language_selected"
+      name="language_selected"
+      (selectionChange)="changeLanguage($event.value)"
+    >
+      @for (language of languages; track language) {
+      <mat-option [value]="language.code">{{ language.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  
+      <button mat-icon-button matTooltip="Like">
+        <mat-icon>favorite</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Share">
+        <mat-icon>share</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Notifications">
+        <mat-icon>notifications</mat-icon>
+      </button>
+      <button
+        mat-icon-button
+        matTooltip="My Account"
+        [matMenuTriggerFor]="userAccountMenu"
+      >
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      
+      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+        <button mat-menu-item routerLink="#">
+          <mat-icon>person</mat-icon><span>My Account</span>
+        </button>
+        <button mat-menu-item routerLink="#">
+          <mat-icon>settings</mat-icon><span>Settings</span>
+        </button>
+        <button mat-menu-item routerLink="#">
+          <mat-icon>help</mat-icon><span>Help</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>Logout
+        </button>
+      </mat-menu>
+      
+</mat-toolbar>
+
+<mat-sidenav-container class="app-container">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    [class.mat-elevation-z4]="true"
+    class="app-sidenav"
+    style="width: 20%"
+  >
+    <mat-nav-list>
+      <mat-list-item routerLink="/welcome">
+        <span class="welcome-text">WELCOME!</span>
+      </mat-list-item>
+      @if(canSeeModuleProductsAdministration){
+        <mat-expansion-panel [class.mat-elevation-z0]="true">
+          <mat-expansion-panel-header>
+            <mat-icon>forklift</mat-icon>Porducts administration</mat-expansion-panel-header
+          >
+          <mat-nav-list>
+            <a mat-list-item routerLink="/about-me/description">
+              <mat-icon>inventory_2</mat-icon> Products stock
+            </a>
+            <a mat-list-item routerLink="/about-me/studies">
+              <mat-icon>attach_money</mat-icon> Products price
+            </a>
+            <a mat-list-item routerLink="/about-me/studies">
+              <mat-icon>list_alt</mat-icon> Products list
+            </a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+      }
+      @if(canSeeModuleUserAdministration){
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          <mat-icon>engineering</mat-icon> Users administration
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/users">Users</a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/roles">Roles</a>
+        </mat-nav-list>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/permissions">Permissions</a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      }
+      @if(canSeeModuleSalesBox){
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+          <mat-icon>shopping_cart</mat-icon>Sales box</mat-expansion-panel-header
+        >
+        <mat-nav-list>
+          <a mat-list-item routerLink="/about-me/description">
+            <mat-icon>barcode_reader</mat-icon><span> Sell products</span>
+          </a>
+          <a mat-list-item routerLink="/about-me/studies">
+            <mat-icon>list_alt</mat-icon> Sales summary 
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      }
+      <mat-nav-list>
+        <a mat-list-item routerLink="#">Github</a>
+      </mat-nav-list>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet> </router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<footer style="display: flex; justify-content: center; align-items: center">
+  <p>&copy; Atuhor: Eduardo M. Patinella</p>
+</footer>

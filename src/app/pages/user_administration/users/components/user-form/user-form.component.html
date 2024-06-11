@@ -1,0 +1,56 @@
+@if(errorMessage){
+  <div>
+    <app-error-message [errorMessage]="errorMessage" />
+  </div>
+}@else{
+<div class="modal">
+  <div class="modal-header">
+    <p>USER FORM</p>
+  </div>
+  <div class="modal-body">
+    @if(isLoaded){ 
+      <mat-spinner></mat-spinner>
+    }@else{
+      <form [formGroup]="userForm">  
+          <mat-form-field class="example-full-width">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" formControlName="username" >
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Email</mat-label>
+            <input type="email" matInput placeholder="Email" formControlName="email" >
+          </mat-form-field>
+
+          <mat-form-field class="example-full-width">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput formControlName="password" placeholder="Password" >
+          </mat-form-field>
+          @if (user) {
+            <mat-form-field class="example-full-width">
+              <mat-label>Roles</mat-label>
+              <input matInput placeholder="Roles" formControlName="roles">
+              <button mat-flat-button color="primary" matSuffix [disabled]="disabledForm" (click)="openRolesModalHandle()">
+                Change roles
+              </button>
+            </mat-form-field>
+          }
+      </form>
+    }
+  </div>
+  <div class="modal-footer" style="display: flex; justify-content: space-between;">
+    <button mat-flat-button color="primary" (click)="closeModal()">Cancel</button>
+    @if(user == undefined){ 
+      <button mat-flat-button color="primary" (click)="addUserHandler()">Create</button>
+    }@else{
+      <button mat-flat-button color="warn" (click)="user.isActive ? disableUserHandler() : enableUserHandler()">@if(user.isActive){Disabled} @else {Eenabled}</button>
+      <button mat-flat-button color="primary" (click)="editUser()" [disabled]="this.userForm.valid ? false : true">Edit</button>
+    }
+  </div>
+
+  @if(openRolesModal && user){
+    <app-roles-form [user]="user" (closeModal)="closeRolesModal($event);"></app-roles-form>
+  }
+  
+</div>
+}

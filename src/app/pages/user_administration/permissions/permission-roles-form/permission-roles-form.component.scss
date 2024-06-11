@@ -1,0 +1,139 @@
+
+
+/* Estilos generales para la ventana modal */
+.modal {
+  position: fixed; /* Fixed positioning for better layering */
+  top: 10vh; /* Add some top margin  */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  width: 100%; /* Set a modal width */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 5px;
+  padding: 20px;
+  background-color: rgb(224, 224, 224);
+  z-index: 9001;
+}
+
+/* Encabezado del modal */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Title on one side, close button on other */
+  padding-bottom: 10px; /* Add some padding for separation */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Light border for sections */
+}
+
+.modal-header p {
+  font-weight: bold; /* Title with some weight */
+  margin: 0; /* Remove default margin */
+}
+
+/* Cuerpo del modal */
+.modal-body {
+  padding: 10px 0; /* Add some padding for content */
+}
+
+/* Pie del modal */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Buttons on the right */
+  padding-top: 10px; /* Add some padding for separation */
+}
+
+
+.modal button:hover {
+  background-color: #28389E; /* Darken on hover for feedback */
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.user-table-container {
+  margin: 20px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.loading {
+  text-align: center;
+}
+
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.roles-container{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Alinear elementos a los extremos */
+}
+
+.exist-roles {
+  text-align: center;
+  overflow-y: scroll; /* Agrega un scroll vertical */
+  height: 400px; /* Establece una altura máxima para el contenedor */
+  width: 50%; /* Establece el ancho del contenedor al 50% */
+}
+
+.role-item {
+  width: 70%;
+  margin-bottom: 10px; /* Agrega un margen inferior entre los elementos */
+  padding: 10px; /* Agrega un padding alrededor de cada elemento */
+  background-color: #f2f2f2; /* Establece un color de fondo para los elementos */
+  border-radius: 4px; /* Agrega bordes redondeados a los elementos */
+}
+
+.role-name {
+  font-weight: bold; /* Establece un peso de fuente en negrita para el nombre del rol */
+}
+
+.roles-of-user {
+  text-align: center;
+  overflow-y: scroll; /* Agrega un scroll vertical */
+  height: 400px; /* Establece una altura máxima para el contenedor */
+  width: 50%; /* Establece el ancho del contenedor al 50% */
+}
+
+.container_item {
+  border: 2px solid black;
+  margin: 4px;
+  width: 50%;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.container_item:hover {
+  background-color: #ff9;
+}
+
+.role-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  background-color: #9cb9be;
+  cursor: pointer; /* Optional: Make the item clickable */
+  width: 86%;
+}
+
+.role-item:hover {
+  background-color: #8685c3; /* Optional: Change background color on hover */
+}
+
+.role-item .mat-icon {
+  color: #b53f3f; /* Adjust color as desired */
+}

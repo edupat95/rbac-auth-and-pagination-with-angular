@@ -1,0 +1,80 @@
+/* Estilo para el contenedor principal */
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0; /* Color de fondo de la página */
+}
+
+/* Estilo para el contenedor del formulario */
+.login-card {
+  width: 400px;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff; /* Fondo del formulario */
+}
+
+/* Estilo para el título del formulario */
+.login-card h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333; /* Color del texto */
+}
+
+/* Estilo para los campos de entrada */
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-container label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Estilo para los mensajes de error */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Estilo para los botones */
+.login-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para los enlaces en las acciones del formulario */
+.mat-card-actions a {
+  margin-right: 10px;
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.mat-card-actions a:hover {
+  text-decoration: underline;
+}

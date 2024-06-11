@@ -1,0 +1,22 @@
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  background-color: #9cb9be;
+  cursor: pointer; /* Optional: Make the item clickable */
+}
+
+.item:hover {
+  background-color: #8685c3; /* Optional: Change background color on hover */
+}
+
+.item .mat-icon {
+  color: #106c00; /* Adjust color as desired */
+}
+
+.add-button:hover {
+  background-color: #3f51b5; /* Adjust for desired contrast */
+}
