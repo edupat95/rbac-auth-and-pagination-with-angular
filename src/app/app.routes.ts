@@ -21,7 +21,6 @@ export const routes: Routes = [
     title: 'Welcome',
     canActivate: [authGuard],    
   },
-  
   {
     path: 'users',
     component: UsersComponent, 
