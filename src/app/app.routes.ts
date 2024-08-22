@@ -6,6 +6,7 @@ import { roleGuard } from './guards/role.guard';
 import { UsersComponent } from './pages/user_administration/users/users.component';
 import { RolesComponent } from './pages/user_administration/roles/roles.component';
 import { PermissionsComponent } from './pages/user_administration/permissions/permissions.component';
+import { permissionGuard } from './guards/permission.guard';
 
 export const routes: Routes = [
   {
@@ -25,9 +26,9 @@ export const routes: Routes = [
     path: 'users',
     component: UsersComponent, 
     title: 'users',
-    canActivate: [authGuard, roleGuard],
+    canActivate: [authGuard, permissionGuard],
     data: {
-      roles: ['ADMIN', 'GENERAL-MANAGER'],
+      permission: ['USER-ADMINISTRATION-CAN-LIST-USERS'],
     }
   },
   {
@@ -43,9 +44,9 @@ export const routes: Routes = [
     path: 'permissions',
     title: 'permissions',
     component: PermissionsComponent,
-    canActivate: [authGuard, roleGuard],
+    canActivate: [authGuard, permissionGuard],
     data: {
-      roles: ['ADMIN']
+      permission: "CAN-LIST-PERMISSIONS"
     }
   }
 ];

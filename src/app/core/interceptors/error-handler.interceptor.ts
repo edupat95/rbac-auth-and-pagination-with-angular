@@ -17,16 +17,21 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
       errorMessage = `Error: ${error.error.message}`;
     } else {
       if(error.status === 401){
+        
         //clean localstorage
-        //localStorage.removeItem('token');
         localStorage.clear();
+        
         //redirect to login
-        router.navigateByUrl('/login');
+        alert("Sesión expirada, por favor inicie sesión nuevamente");
+        router.navigateByUrl('/login').then(() => {
+          window.location.reload(); // Force a reload of the application state
+        });
       } else if(error.status === 403){
-        //redirect to forbidden
+        //redirect to welcome
         router.navigateByUrl('/welcome');
       }
-      console.error("Desde interceptor -> " + JSON.stringify(error));
+      
+      //console.error("Desde interceptor -> " + JSON.stringify(error));
       errorMessage = `Error code: ${error.status}, message: ${error.error.message}`;
     }
 

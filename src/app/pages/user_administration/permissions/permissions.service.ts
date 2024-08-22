@@ -37,7 +37,7 @@ export class PermissionsService {
         name: name,
         roles: roles
       };
-      console.log("Data to send: ", JSON.stringify(data));
+      //console.log("Data to send: ", JSON.stringify(data));
       return this.http.patch<any>(`${environment.API_URL}/permissions/${id}`, data);
     }
 

@@ -62,7 +62,7 @@ export class PermissionRolesFormComponent {
   }
 
   ngOnInit(): void {
-    console.log('Permission roles: ' + this.permission?.roles);
+    //console.log('Permission roles: ' + this.permission?.roles);
     this.findExistingRoles();
   }
 
@@ -76,14 +76,13 @@ export class PermissionRolesFormComponent {
   };
 
   findExistingRoles = () => {
-    console.log('findExistingRoles')
     this.isLoading = true;
     this.subscription = this.permissionsService
       .getRoles(this.getRoleFiter())
       .pipe(
         catchError((error: string) => {
           this.errorMessage = error;
-          console.log(this.errorMessage);
+          console.error(this.errorMessage);
           return EMPTY;
         }),
         map((pageRequest: PageRquest) => ({
@@ -94,7 +93,7 @@ export class PermissionRolesFormComponent {
       )
       .subscribe((data) => {
         this.existingRoles = [...this.existingRoles, ...data.listOfRoles];
-        console.log('Existing Roles', this.existingRoles);
+        //console.log('Existing Roles', this.existingRoles);
         this.meta = data.meta;
         this.isLoading = false;
       });
@@ -104,7 +103,7 @@ export class PermissionRolesFormComponent {
   items = this.permissionsService.generateItems(0, 50);
 
   loadItems(i: number) {
-    console.log("Load items");
+    //console.log("Load items");
     if (i === this.existingRoles.length - 1) {
       this.index = this.index + 1;
       this.findExistingRoles();
@@ -118,32 +117,26 @@ export class PermissionRolesFormComponent {
       const existingRoleIndex = this.permission?.roles.findIndex(existingRole => existingRole.id === role.id);
       if (existingRoleIndex === -1) {
         //console.log('Role not found, adding...');
-        this.permission?.roles.push(role); // Assuming you have logic to update user roles
+        this.permission?.roles.push(role); // Assuming you have logic to update permission roles
       }
     } else { //Case Create new permission
       const existingRoleIndex = this.rolesToSend.findIndex(existingRole => existingRole.id === role.id);
       if (existingRoleIndex === -1) {
-        this.rolesToSend.push(role); // Assuming you have logic to update user roles
+        this.rolesToSend.push(role); // Assuming you have logic to update permission roles
       }
     }
-    
   }
 
   removeRole(role: Role){
     if(this.permission){ //CASE Update permission roles
       const existingRoleIndex = this.permission?.roles.findIndex(existingRole => existingRole.id === role.id);
       if (existingRoleIndex !== -1) {
-        //console.log('Role found, removing...');
-        if(existingRoleIndex){
-          this.permission?.roles.splice(existingRoleIndex, 1); // Assuming you have logic to update user roles
-        }
+        this.permission?.roles.splice(existingRoleIndex, 1); // Assuming you have logic to update permission roles
       }
     } else { //Case Create new permission
       const existingRoleIndex = this.rolesToSend.findIndex(existingRole => existingRole.id === role.id);
       if (existingRoleIndex !== -1) {
-        if(existingRoleIndex){
-          this.rolesToSend.splice(existingRoleIndex, 1); // Assuming you have logic to update user roles
-        }
+        this.rolesToSend.splice(existingRoleIndex, 1); // Assuming you have logic to update permission roles
       } 
     }
   }

@@ -2,7 +2,7 @@
   <button mat-icon-button (click)="sidenav.toggle()" matTooltip="Menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span> Roles system with Angular & NestJs </span>
+  <span> RBAC system with Angular & NestJs </span>
   <span class="toolbar-item-spacer"></span>
   <mat-form-field>
     <mat-label>Select an option</mat-label>
@@ -93,9 +93,11 @@
         <mat-nav-list>
           <a mat-list-item routerLink="/roles">Roles</a>
         </mat-nav-list>
+        @if(canListPermissions){
         <mat-nav-list>
           <a mat-list-item routerLink="/permissions">Permissions</a>
         </mat-nav-list>
+        }
       </mat-expansion-panel>
       }
       @if(canSeeModuleSalesBox){
