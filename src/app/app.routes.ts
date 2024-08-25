@@ -10,11 +10,15 @@ import { permissionGuard } from './guards/permission.guard';
 
 export const routes: Routes = [
   {
+    path: '',
+    component: LoginComponent,
+    title: 'Login',
+  },
+  {
     path: 'login',
     component: LoginComponent,
     title: 'Login',
   },
-
   {
     path: 'welcome',
     component: WelcomeComponent, 
@@ -27,16 +31,16 @@ export const routes: Routes = [
     title: 'users',
     canActivate: [authGuard, permissionGuard],
     data: {
-      permission: ['USER-ADMINISTRATION-CAN-LIST-USERS'],
+      permission: "USER-ADMINISTRATION-CAN-LIST-USERS"
     }
   },
   {
     path: 'roles',
     component: RolesComponent, 
     title: 'roles',
-    canActivate: [authGuard, roleGuard],
+    canActivate: [authGuard, permissionGuard],
     data: {
-      roles: ['ADMIN', 'GENERAL-MANAGER']
+      permission: "USER-ADMINISTRATION-CAN-LIST-ROLES"
     }
   },
   {
@@ -45,7 +49,7 @@ export const routes: Routes = [
     component: PermissionsComponent,
     canActivate: [authGuard, permissionGuard],
     data: {
-      permission: "CAN-LIST-PERMISSIONS"
+      permission: "USER-ADMINISTRATION-CAN-LIST-PERMISSIONS"
     }
   }
 ];

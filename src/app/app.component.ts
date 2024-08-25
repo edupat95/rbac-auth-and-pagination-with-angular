@@ -3,6 +3,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { NavComponent } from './shared/nav/nav.component';
 import { LoginComponent } from './pages/login/login.component';
 import { Router } from '@angular/router';
+import { PermissionService } from './auth/permission.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -29,9 +30,7 @@ export class AppComponent {
     if (localStorage.getItem('token')) {
       this.isLogged = true;
       this.router.navigateByUrl('/welcome');
-    } else {
-      this.isLogged = false;
-    }    
+    }
   }
 
   reslutLogin = ($event: boolean) => {

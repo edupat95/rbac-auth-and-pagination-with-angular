@@ -23,6 +23,7 @@ import { Observable, Subscription } from 'rxjs';
 import { LoginResponse } from '../../models/login.model';
 import { ErrorMessageComponent } from '../../components/error-message/error-message.component';
 import { Router } from '@angular/router';
+import { PermissionService } from '../../auth/permission.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -48,18 +49,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  constructor(private fb: FormBuilder, private authService: AuthService, private permissionService: PermissionService) {}
+
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
-
   router = inject(Router);
 
   ngOnInit(){
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     if(localStorage.getItem('token')){
       this.router.navigateByUrl('/welcome');
     }
@@ -90,7 +89,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.subscrption = this.authService.login(this.loginForm.value).subscribe(
       {
-        next: (data) => {
+        next: async (data) => {
           this.errorMessage = '';
           this.loginResponse = data;
           localStorage.setItem('token', this.loginResponse.access_token);
@@ -98,7 +97,7 @@ export class LoginComponent implements OnInit {
           // Split the token into parts
           const parts = this.loginResponse.access_token.split('.');
           const encodedPayload = parts[1];
-          // Decode the base64 encoded payload
+          //Decode the base64 encoded payload
           const decodedPayload = atob(encodedPayload);
           //convert payload to object
           const payload = JSON.parse(decodedPayload); 
@@ -107,6 +106,10 @@ export class LoginComponent implements OnInit {
           } else {
             console.error("'roles' not found in payload");
           }
+
+          //Load permissions in BehaviorSubject
+          await this.permissionService.loadPermissions();
+
           this.isLogged.emit(true);
         },
         error: (error) => {

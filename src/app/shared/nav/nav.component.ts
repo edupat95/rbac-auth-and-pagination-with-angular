@@ -15,6 +15,7 @@ import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
 import { PermissionService } from '../../auth/permission.service';
+import { HasPermissionDirective } from '../../directives/has-permission.directive';
 @Component({
   selector: 'app-nav',
   standalone: true,
@@ -32,17 +33,17 @@ import { PermissionService } from '../../auth/permission.service';
     MatTooltipModule,
     FormsModule,
     RouterLink,
-    RouterOutlet
+    RouterOutlet,
+    HasPermissionDirective
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.scss'
 })
 export class NavComponent {
 
-  constructor(private authService: AuthService, private permissionService: PermissionService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadPermissions();
     if (!localStorage.getItem('token')) {
       this.router.navigateByUrl('/login');
     }
@@ -50,30 +51,7 @@ export class NavComponent {
 
   @Output() isLogged = new EventEmitter<boolean>(); //emisor de eventos
 
-  router = inject(Router);
-
-
-  //permissions
-  canListPermissions = false;
-  canSeeModuleUserAdministration = false;
-  canSeeModuleProductsAdministration = false; 
-  canSeeModuleSalesBox = false;
-
-  async loadPermissions() {
-    this.canListPermissions = await this.permissionService.has_permission('CAN-LIST-PERMISSIONS');
-    this.canSeeModuleUserAdministration = await this.permissionService.has_permission('CAN-SEE-MODULE-USERS-ADMINISTRATION');
-    this.canSeeModuleProductsAdministration = await this.permissionService.has_permission('CAN-SEE-MODULE-PRODUCTS-ADMINISTRATION');
-    this.canSeeModuleSalesBox = await this.permissionService.has_permission('CAN-SEE-MODULE-SALES-BOX');
-    
-    //console.log('canListPermissions: ', this.canListPermissions);
-    //console.log('canSeeModuleUserAdministration: ', this.canSeeModuleUserAdministration);
-    //console.log('canSeeModuleProductsAdministration: ', this.canSeeModuleProductsAdministration);
-    //console.log('canSeeModuleSalesBox: ', this.canSeeModuleSalesBox);
-  }
-
-  //permissions
-
-  
+  router = inject(Router);  
 
   title = 'Eduardo Patinella - Software Engineer';
   languages = [

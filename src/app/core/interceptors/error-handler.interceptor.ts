@@ -17,10 +17,8 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
       errorMessage = `Error: ${error.error.message}`;
     } else {
       if(error.status === 401){
-        
         //clean localstorage
         localStorage.clear();
-        
         //redirect to login
         alert("Sesión expirada, por favor inicie sesión nuevamente");
         router.navigateByUrl('/login').then(() => {

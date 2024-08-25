@@ -1,24 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, EMPTY, firstValueFrom, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  EMPTY,
+  firstValueFrom,
+  Observable,
+} from 'rxjs';
 import { environment } from '../../environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PermissionService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  permission(permission: string): Observable<string[]> {
-    
-    //console.log('Url: ' + `${environment.API_URL}/permissions/${permission}`);
-    
-    return this.http.get<string[]>(
-      `${environment.API_URL}/permissions/${permission}`
-    );
+  async loadPermissions(): Promise<void> {
+    const permissions = await this.http.get<string[]>(`${environment.API_URL}/permissions/permissions-of-user`).toPromise();
+    if (permissions) {
+      //save permissions in local storage
+      localStorage.setItem('permissions', JSON.stringify(permissions));
+    }
+    //console.log('Permissions loaded: ' + localStorage.getItem('permissions'));
   }
 
+  hasPermission(permission: string): boolean {
+    const permissionsString = localStorage.getItem('permissions');
+    if (!permissionsString) {
+      return false;
+    }
+    const permissions = JSON.parse(permissionsString) as string[];
+    //console.log('permissions: ', permissions);
+    return permissions.includes(permission) ?? false;
+  }
+
+  permission(permission: string): Observable<string[]> {
+    return this.http.get<string[]>(
+      `${environment.API_URL}/permissions/roles-by-permission/${permission}`
+    );
+  }
   async has_permission(permission: string): Promise<boolean> {
     try {
       const permissionRoles: string[] = await firstValueFrom(
@@ -29,12 +49,12 @@ export class PermissionService {
           })
         )
       );
-      
+
       const userRoles = localStorage.getItem('roles');
       if (!userRoles) {
         return false;
       }
-      
+
       const userRolesArray = JSON.parse(userRoles) as string[];
 
       //console.log('userRolesArray  -----------> ', userRolesArray);
@@ -50,5 +70,4 @@ export class PermissionService {
       return false;
     }
   }
-
-} 
+}
